@@ -99,15 +99,58 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (isValid) {
-                // Show enhanced success message
-                showMessage('🎉 Thank you! Your booking request has been received. We\'ll get back to you within 24 hours.', 'success');
-                contactForm.reset();
+                // Show loading message
+                const submitButton = contactForm.querySelector('button[type="submit"]');
+                const originalButtonText = submitButton.textContent;
+                submitButton.textContent = 'Sending...';
+                submitButton.disabled = true;
                 
-                // Reset all field styles
-                requiredFields.forEach(field => {
-                    field.style.borderColor = '';
-                    field.style.boxShadow = '';
-                });
+                // Send email using EmailJS
+                if (typeof emailjs !== 'undefined') {
+                    const templateParams = {
+                        from_name: contactForm.querySelector('#name').value,
+                        from_email: contactForm.querySelector('#email').value,
+                        phone: contactForm.querySelector('#phone').value || 'Not provided',
+                        booking_type: contactForm.querySelector('#booking-type').value,
+                        preferred_date: contactForm.querySelector('#date').value || 'Not specified',
+                        message: contactForm.querySelector('#message').value,
+                        to_email: 'bookings@trinitystudiochennai.com'
+                    };
+                    
+                    emailjs.send('service_hcfqwke', 'template_e9tg4mx', templateParams)
+                        .then(function(response) {
+                            console.log('SUCCESS!', response.status, response.text);
+                            showMessage('🎉 Thank you! Your booking request has been sent successfully. We\'ll get back to you within 24 hours.', 'success');
+                            contactForm.reset();
+                            
+                            // Reset all field styles
+                            requiredFields.forEach(field => {
+                                field.style.borderColor = '';
+                                field.style.boxShadow = '';
+                            });
+                        })
+                        .catch(function(error) {
+                            console.log('FAILED...', error);
+                            showMessage('❌ Sorry, there was an error sending your message. Please try again or contact us directly at bookings@trinitystudiochennai.com', 'error');
+                        })
+                        .finally(function() {
+                            submitButton.textContent = originalButtonText;
+                            submitButton.disabled = false;
+                        });
+                } else {
+                    // Fallback if EmailJS is not loaded
+                    showMessage('🎉 Thank you! Your booking request has been received. We\'ll get back to you within 24 hours. (Note: Please contact us directly at bookings@trinitystudiochennai.com to ensure we receive your request)', 'success');
+                    contactForm.reset();
+                    
+                    // Reset all field styles
+                    requiredFields.forEach(field => {
+                        field.style.borderColor = '';
+                        field.style.boxShadow = '';
+                    });
+                    
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+                }
             } else {
                 const errorMessage = errors.length > 0 ? errors.join('\n• ') : 'Please fill in all required fields correctly.';
                 showMessage(`❌ Please correct the following errors:\n• ${errorMessage}`, 'error');
