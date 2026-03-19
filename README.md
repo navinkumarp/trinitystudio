@@ -157,8 +157,8 @@ Natural Tamil phrases used throughout:
 - Contact the development team
 
 **For Trinity Studio Bookings:**
-- Email: bookings@trinitystudio.com
-- Phone: +91 44 2876 5432
+- Email: bookings@trinitystudiochennai.com
+- Phone: +91 9740797808
 - Instagram: @trinitystudiochennai
 
 ## 🔄 Future Enhancements
