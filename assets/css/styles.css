@@ -129,7 +129,7 @@ h3 {
   padding: 4rem 0;
 }
 
-/* Hero Section */
+/* Hero Section with Banner Image */
 .hero {
   min-height: 90vh;
   display: flex;
@@ -137,9 +137,20 @@ h3 {
   justify-content: center;
   text-align: center;
   background: 
-    radial-gradient(circle at 30% 30%, rgba(255, 180, 0, 0.1) 0%, transparent 50%),
+    linear-gradient(
+      135deg, 
+      rgba(14, 14, 14, 0.85) 0%, 
+      rgba(14, 14, 14, 0.75) 30%, 
+      rgba(14, 14, 14, 0.8) 70%, 
+      rgba(14, 14, 14, 0.9) 100%
+    ),
+    radial-gradient(circle at 30% 30%, rgba(255, 180, 0, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 70% 70%, rgba(32, 178, 170, 0.1) 0%, transparent 50%),
-    linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    url('../images/PHOTO-2025-02-22-17-47-33.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   position: relative;
   overflow: hidden;
 }
@@ -152,11 +163,12 @@ h3 {
   right: 0;
   bottom: 0;
   background: 
-    linear-gradient(45deg, transparent 25%, rgba(255, 180, 0, 0.02) 25%, rgba(255, 180, 0, 0.02) 50%, transparent 50%, transparent 75%, rgba(255, 180, 0, 0.02) 75%),
-    linear-gradient(-45deg, transparent 25%, rgba(32, 178, 170, 0.02) 25%, rgba(32, 178, 170, 0.02) 50%, transparent 50%, transparent 75%, rgba(32, 178, 170, 0.02) 75%);
+    linear-gradient(45deg, transparent 25%, rgba(255, 180, 0, 0.03) 25%, rgba(255, 180, 0, 0.03) 50%, transparent 50%, transparent 75%, rgba(255, 180, 0, 0.03) 75%),
+    linear-gradient(-45deg, transparent 25%, rgba(32, 178, 170, 0.03) 25%, rgba(32, 178, 170, 0.03) 50%, transparent 50%, transparent 75%, rgba(32, 178, 170, 0.03) 75%);
   background-size: 60px 60px;
   animation: movePattern 20s linear infinite;
   pointer-events: none;
+  z-index: 1;
 }
 
 @keyframes movePattern {
@@ -164,14 +176,33 @@ h3 {
   100% { transform: translate(60px, 60px); }
 }
 
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+  background: rgba(14, 14, 14, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 180, 0, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
 .hero-content h1 {
   margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .hero-tagline {
   font-size: 1.2rem;
   color: var(--text-secondary);
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.hero-subtitle {
+  color: var(--accent-primary);
   margin-bottom: 2rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .cta-buttons {
@@ -534,6 +565,12 @@ h3 {
   
   .hero {
     min-height: 70vh;
+    background-attachment: scroll; /* Better performance on mobile */
+  }
+  
+  .hero-content {
+    padding: 1.5rem;
+    margin: 0 1rem;
   }
   
   .section {
